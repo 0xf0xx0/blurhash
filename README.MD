@@ -1,6 +1,6 @@
 # blurhash
 
-cli blurhash tool
+cli blurhash tool thats basically a wrapper around https://github.com/bbrks/go-blurhash
 
 ## features
 - auto-scales images
