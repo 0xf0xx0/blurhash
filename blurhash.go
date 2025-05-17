@@ -160,12 +160,7 @@ func resolvePath(path string) string {
 	return path
 }
 func scaleDown(x, y int) (int, int) {
-	for {
-		if max(x, y) <= 32 {
-			break
-		}
-		x /= 2
-		y /= 2
-	}
-	return x, y
+	divisor := float64(max(x, y)) / 32
+
+	return int(float64(x) / divisor), int(float64(y) / divisor)
 }

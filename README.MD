@@ -17,5 +17,10 @@ go install
 ## usage
 ```console
 $ blurhash boat-on-lake/final.jpg
-TLAdfp_4%NDjRjof-p%Mt7.9x]xu 15,23
+TLAn4P_4%MDjV@t7-;%Mt7.9x]xu 21,32
 ```
+
+```console
+$ blurhash --decode 'TLAn4P_4%MDjV@t7-;%Mt7.9x]xu' --width 21 --height 32 --output examples/final-blur.png
+```
+<img src="./examples/final-blur.png" width="100" />
