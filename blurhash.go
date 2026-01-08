@@ -6,9 +6,11 @@ import (
 	"image"
 	"image/png"
 	"os"
+	"os/signal"
 	"os/user"
 	"path/filepath"
 	"strings"
+	"syscall"
 
 	"github.com/bbrks/go-blurhash"
 	"github.com/kovidgoyal/imaging"
@@ -99,6 +101,10 @@ func main() {
 				}
 
 				if output == "-" {
+					/// display a warning if not piped out and not forced
+					if stat,_ := os.Stdout.Stat(); stat.Mode() & os.ModeCharDevice != 0 {
+						return cli.Exit(fmt.Sprintf("you probably want to pipe the image data, not see it, right?"), 1)
+					}
 					png.Encode(os.Stdout, img)
 				} else {
 					file, err := os.Create(output)
@@ -144,6 +150,12 @@ func main() {
 			return cli.Exit("", 0)
 		},
 	}
+
+	go func() {
+		c := make(chan os.Signal, 1)
+		signal.Notify(c, syscall.SIGPIPE)
+		<-c /// discard, we don care
+	}()
 	app.Run(context.TODO(), os.Args)
 }
 
